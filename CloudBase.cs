@@ -1,31 +1,40 @@
 ﻿namespace CloudBase
 {
-  public class CloudBaseApp {
+    public class CloudBaseApp
+    {
+        private static object _sync = new object();
+        private static CloudBaseApp Instance;
+        private readonly Core Core;
+        public readonly Auth Auth;
 
-    private static CloudBaseApp Instance;
-    private readonly Core Core;
-    public readonly Auth Auth;
+        public readonly Function Function;
 
-    public readonly Function Function;
+        public readonly Storage Storage;
 
-    public readonly Storage Storage;
+        public readonly Database Db;
+        private CloudBaseApp(string env, int timeout)
+        {
+            this.Core = new Core(env, timeout);
+            this.Auth = new Auth(this.Core);
+            this.Function = new Function(this.Core);
+            this.Storage = new Storage(this.Core);
+            this.Db = new Database(this.Core);
+        }
 
-    public readonly Database Db;
+        public static CloudBaseApp Init(string env, int timeout)
+        {
+            if (Instance == null)
+            {
+                lock (_sync)
+                {
+                    if (Instance == null)
+                    {
+                        Instance = new CloudBaseApp(env, timeout);
+                    }
+                }
+            }
 
-    private CloudBaseApp(string env, int timeout) {
-      this.Core = new Core(env, timeout);
-      this.Auth = new Auth(this.Core);
-      this.Function = new Function(this.Core);
-      this.Storage = new Storage(this.Core);
-      this.Db = new Database(this.Core);
+            return Instance;
+        }
     }
-
-    public static CloudBaseApp Init(string env, int timeout) {
-      if (Instance == null) {
-        Instance = new CloudBaseApp(env, timeout);
-      }
-
-      return Instance;
-    }
-  }
 }
