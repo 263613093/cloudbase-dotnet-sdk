@@ -4,68 +4,59 @@ using System.Threading;
 
 namespace CloudBase {
 	partial class Query {
-		public Task<DbQueryResponse> GetAsync() {
-			return Task<DbQueryResponse>.Run(() => {
-				return this.Get();
-			});
+		public Task<DbQueryResponse> GetAsync()
+		{
+			var dest = this.Get();
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbCountResponse> CountAsync() {
-			return Task<DbCountResponse>.Run(() => {
-				return this.Count();
-			});
+			var dest= this.Count();
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbUpdateResponse> UpdateAsync(object data) {
-			return Task<DbUpdateResponse>.Run(() => {
-				return this.Update(data);
-			});
+			var dest= this.Update(data);
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbRemoveResponse> RemoveAsync() {
-			return Task<DbRemoveResponse>.Run(() => {
-				return this.Remove();
-			});
+			var dest= this.Remove();
+			return Task.FromResult(dest);
 		}
 	};
 
 	partial class Collection {
 		public Task<DbCreateResponse> AddAsync(object data) {
-			return Task<DbCreateResponse>.Run(() => {
-				return this.Add(data);
-			});
+			var dest = this.Add(data);
+			return Task.FromResult(dest);
 		}
 	}
 
 	partial class Document {
 		public Task<DbQueryResponse> GetAsync() {
-			return Task<DbQueryResponse>.Run(() => {
-				return this.Get();
-			});
+			var dest = this.Get();
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbCreateResponse> CreateAsync(object data) {
-			return Task<DbCreateResponse>.Run(() => {
-				return this.Create(data);
-			});
+			var dest = this.Create(data);
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbUpdateResponse> SetAsync(object data) {
-			return Task<DbUpdateResponse>.Run(() => {
-				return this.Set(data);
-			});
+			var dest = this.Set(data);
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbUpdateResponse> UpdateAsync(object data) {
-			return Task<DbUpdateResponse>.Run(() => {
-				return this.Update(data);
-			});
+			var dest = this.Update(data);
+			return Task.FromResult(dest);
 		}
 
 		public Task<DbRemoveResponse> RemoveAsync() {
-			return Task<DbRemoveResponse>.Run(() => {
-				return this.Remove();
-			});
+			var dest = this.Remove();
+			return Task.FromResult(dest);
 		}
 	}
 }

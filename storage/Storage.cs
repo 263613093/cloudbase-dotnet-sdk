@@ -74,8 +74,9 @@ namespace CloudBase {
         throw new CloudBaseException(CloudBaseExceptionCode.EMPTY_PARAM, "删除文件列表不能为空");
       }
 
-      Dictionary<string, dynamic> param = new Dictionary<string, dynamic>();
-      param.Add("fileid_list", fileIdList);
+      var param = new Dictionary<string, object>{
+          { "fileid_list",fileIdList}
+      };
 
       DeleteFilesResponse res = await this.core.Request.PostAsync<DeleteFilesResponse>("storage.batchDeleteFile", param);
 
